@@ -2,21 +2,26 @@
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
 import africastalking
 import json
 from django.shortcuts import render
 from .models import Bulb
+import logging
 
-username = "sim_alert" 
+# Initialize logging
+logger = logging.getLogger(__name__)
+
+# Initialize Africa's Talking
+username = "Adam Katani" 
 api_key = "atsk_6f8d5e4a837a68cfaccfa81922360f5e6d7e3082e0aca4a01314c2857ffe833ff25fda59"   
 africastalking.initialize(username, api_key)
 sms_service = africastalking.SMS
 
-@method_decorator(csrf_exempt, name='dispatch')
+@csrf_exempt
 def sms_webhook(request):
     if request.method == "POST":
         try:
+            logger.info(f"Request body: {request.body}")
             data = json.loads(request.body)
             message = data.get('text', '').strip().lower()  
             sender = data.get('from', '')  
@@ -36,6 +41,7 @@ def sms_webhook(request):
             return JsonResponse({"status": "success"}, status=200)
 
         except Exception as e:
+            logger.error(f"Error: {e}")
             return JsonResponse({"status": "error", "message": str(e)}, status=400)
 
     return JsonResponse({"status": "error", "message": "Invalid request method."}, status=405)
@@ -43,9 +49,9 @@ def sms_webhook(request):
 def send_sms(to, message):
     try:
         response = sms_service.send(message, [to])
-        print(f"SMS sent: {response}")
+        logger.info(f"SMS sent: {response}")
     except Exception as e:
-        print(f"Error sending SMS: {e}")
+        logger.error(f"Error sending SMS: {e}")
 
 @csrf_exempt
 def bulb_status(request):

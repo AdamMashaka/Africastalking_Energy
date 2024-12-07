@@ -75,7 +75,7 @@
 
         // Fetch the current bulb status from the backend
         const fetchBulbStatus = () => {
-            fetch('/bulb-control/bulb-status/')
+            fetch('/bulb-status/')
                 .then(response => response.json())
                 .then(data => {
                     if (data.state) {
@@ -89,7 +89,7 @@
 
         // Toggle the bulb state via the backend
         toggleButton.addEventListener("click", () => {
-            fetch('/bulb-control/toggle-bulb/', {
+            fetch('/toggle-bulb/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
