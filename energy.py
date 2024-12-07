@@ -6,8 +6,8 @@ import requests
 app = Flask(__name__)
 
 # Initialize Africastalking
-username = "sandbox"
-api_key = "atsk_0bba4b807c90e26c930cc206d384414f2d38038b717718bc0a1a6801d23a"
+username = "sandbox"  
+api_key = "atsk_6f8d5e4a837a68cfaccfa81922360f5e6d7e3082e0aca4a01314c2857ffe833ff25fda59"
 africastalking.initialize(username, api_key)
 sms = africastalking.SMS
 
@@ -67,10 +67,10 @@ def ussd_callback():
         response = "END Call us at +255713581041 for support."
 
     elif text == "3*2":
-        response = "END Send your query via SMS to +255713581041."
+        response = "END Send your query via SMS to +255694021848."
 
     elif text == "3*3":
-        response = "END Email us at support@mapato.ai."
+        response = "END Email us at adam@gmail.com."
 
     # Agricultural Product Prices
     elif text == "4":
