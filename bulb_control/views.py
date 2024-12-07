@@ -1,9 +1,16 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from africastalking import AfricasTalkingGateway, AfricasTalkingGatewayException
+import africastalking
 import json
+from django.shortcuts import render
 from .models import Bulb
+
+# Initialize Africa's Talking
+username = "your_username"  # Replace with your Africa's Talking username
+api_key = "your_api_key"    # Replace with your Africa's Talking API key
+africastalking.initialize(username, api_key)
+sms_service = africastalking.SMS
 
 @method_decorator(csrf_exempt, name='dispatch')
 def sms_webhook(request):
@@ -37,17 +44,12 @@ def sms_webhook(request):
     return JsonResponse({"status": "error", "message": "Invalid request method."}, status=405)
 
 def send_sms(to, message):
-    # Africa's Talking credentials
-    username = "your_username"
-    api_key = "your_api_key"
-
-    gateway = AfricasTalkingGateway(username, api_key)
-
     try:
-        gateway.sendMessage(to, message)
-    except AfricasTalkingGatewayException as e:
+        response = sms_service.send(message, [to])
+        print(f"SMS sent: {response}")
+    except Exception as e:
         print(f"Error sending SMS: {e}")
-        
+
 @csrf_exempt
 def bulb_status(request):
     bulb, _ = Bulb.objects.get_or_create(id=1)
@@ -62,3 +64,5 @@ def toggle_bulb(request):
         return JsonResponse({"state": bulb.state})
     return JsonResponse({"error": "Invalid request method."}, status=400)
 
+def home(request):
+    return render(request, 'index.html')
