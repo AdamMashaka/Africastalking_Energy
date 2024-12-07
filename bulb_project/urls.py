@@ -22,5 +22,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('bulb_control.urls')),  # Ensure this line is present
+    path('', include('bulb_control.urls')), 
 ]
