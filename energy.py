@@ -5,7 +5,7 @@ import requests
 
 app = Flask(__name__)
 
-# Initialize Africastalking
+
 username = "sandbox"  
 api_key = "atsk_6f8d5e4a837a68cfaccfa81922360f5e6d7e3082e0aca4a01314c2857ffe833ff25fda59"
 africastalking.initialize(username, api_key)
@@ -13,7 +13,7 @@ sms = africastalking.SMS
 
 @app.route('/', methods=['POST', 'GET'])
 def ussd_callback():
-    # Extract USSD request data
+    
     session_id = request.values.get("sessionId", "")
     service_code = request.values.get("serviceCode", "")
     phone_number = request.values.get("phoneNumber", "")
@@ -21,7 +21,7 @@ def ussd_callback():
 
     response = ""
 
-    # Main Menu
+  
     if text == "":
         response = (
             "CON Welcome to Energy conversation!\n"
@@ -32,7 +32,7 @@ def ussd_callback():
             
         )
 
-    # Electricity Options
+   
     elif text == "1":
         response = "CON Enter your electricity meter number:"
 
@@ -72,7 +72,7 @@ def ussd_callback():
     elif text == "3*3":
         response = "END Email us at adam@gmail.com."
 
-    # Agricultural Product Prices
+  
     elif text == "4":
         response = (
             "CON Select a product to check prices:\n"
@@ -82,7 +82,6 @@ def ussd_callback():
             "4. Potatoes\n"
         )
 
-    # Farming Advice
     elif text == "5":
         response = (
             "CON Choose a farming advice topic:\n"
