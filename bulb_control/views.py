@@ -6,9 +6,9 @@ import json
 from django.shortcuts import render
 from .models import Bulb
 
-# Initialize Africa's Talking
-username = "your_username"  # Replace with your Africa's Talking username
-api_key = "your_api_key"    # Replace with your Africa's Talking API key
+
+username = "your_username" 
+api_key = "your_api_key"   
 africastalking.initialize(username, api_key)
 sms_service = africastalking.SMS
 
@@ -16,13 +16,13 @@ sms_service = africastalking.SMS
 def sms_webhook(request):
     if request.method == "POST":
         try:
-            # Parse incoming SMS data
+           
             data = json.loads(request.body)
-            message = data.get('text', '').strip().lower()  # Incoming SMS content
-            sender = data.get('from', '')  # Sender phone number
+            message = data.get('text', '').strip().lower()  
+            sender = data.get('from', '')  
 
-            # Bulb state handling
-            bulb, created = Bulb.objects.get_or_create(id=1)  # Single bulb state
+            
+            bulb, created = Bulb.objects.get_or_create(id=1)  
             if message == "switch on":
                 bulb.state = True
                 response_message = "Bulb has been switched ON."
@@ -34,7 +34,7 @@ def sms_webhook(request):
 
             bulb.save()
 
-            # Respond to the sender via Africa's Talking
+            
             send_sms(sender, response_message)
             return JsonResponse({"status": "success"}, status=200)
 
