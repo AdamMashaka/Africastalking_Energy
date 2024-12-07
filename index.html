@@ -67,15 +67,64 @@
     <div class="bulb-container">
         <div class="bulb" id="bulb"></div>
     </div>
-    <button id="toggleButton">Turn On/Off Bulb</button>
+    <button id="toggleButton">Toggle Bulb</button>
 
     <script>
         const bulb = document.getElementById("bulb");
         const toggleButton = document.getElementById("toggleButton");
 
+        // Fetch the current bulb status from the backend
+        const fetchBulbStatus = () => {
+            fetch('/bulb-control/bulb-status/')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.state) {
+                        bulb.classList.add("on");
+                    } else {
+                        bulb.classList.remove("on");
+                    }
+                })
+                .catch(error => console.error('Error fetching bulb status:', error));
+        };
+
+        // Toggle the bulb state via the backend
         toggleButton.addEventListener("click", () => {
-            bulb.classList.toggle("on");
+            fetch('/bulb-control/toggle-bulb/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.state) {
+                        bulb.classList.add("on");
+                    } else {
+                        bulb.classList.remove("on");
+                    }
+                })
+                .catch(error => console.error('Error toggling bulb:', error));
         });
+
+        // Get CSRF token
+        const getCookie = (name) => {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        };
+
+        // Initialize bulb status
+        fetchBulbStatus();
     </script>
 </body>
 </html>
