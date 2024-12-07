@@ -1,3 +1,5 @@
+# views.py
+
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -5,7 +7,6 @@ import africastalking
 import json
 from django.shortcuts import render
 from .models import Bulb
-
 
 username = "your_username" 
 api_key = "your_api_key"   
@@ -16,12 +17,10 @@ sms_service = africastalking.SMS
 def sms_webhook(request):
     if request.method == "POST":
         try:
-           
             data = json.loads(request.body)
             message = data.get('text', '').strip().lower()  
             sender = data.get('from', '')  
 
-            
             bulb, created = Bulb.objects.get_or_create(id=1)  
             if message == "switch on":
                 bulb.state = True
@@ -33,8 +32,6 @@ def sms_webhook(request):
                 response_message = "Invalid command. Use 'switch on' or 'switch off'."
 
             bulb.save()
-
-            
             send_sms(sender, response_message)
             return JsonResponse({"status": "success"}, status=200)
 
