@@ -26,7 +26,6 @@ def sms_webhook(request):
            
             data = urllib.parse.parse_qs(request.body.decode('utf-8'))
             logger.info(f"Parsed data: {data}")
-
             
             message = data.get('text', [''])[0].strip().lower()
             sender = data.get('from', [''])[0]
@@ -97,3 +96,4 @@ def home(request):
     Renders the home page.
     """
     return render(request, 'index.html')
+
