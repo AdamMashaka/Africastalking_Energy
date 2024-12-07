@@ -47,4 +47,18 @@ def send_sms(to, message):
         gateway.sendMessage(to, message)
     except AfricasTalkingGatewayException as e:
         print(f"Error sending SMS: {e}")
+        
+@csrf_exempt
+def bulb_status(request):
+    bulb, _ = Bulb.objects.get_or_create(id=1)
+    return JsonResponse({"state": bulb.state})
+
+@csrf_exempt
+def toggle_bulb(request):
+    if request.method == "POST":
+        bulb, _ = Bulb.objects.get_or_create(id=1)
+        bulb.state = not bulb.state
+        bulb.save()
+        return JsonResponse({"state": bulb.state})
+    return JsonResponse({"error": "Invalid request method."}, status=400)
 
