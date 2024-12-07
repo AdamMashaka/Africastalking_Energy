@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Bulb</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .bulb-container {
+            margin-bottom: 20px;
+        }
+
+        .bulb {
+            width: 100px;
+            height: 150px;
+            background-color: #333;
+            border-radius: 50% 50% 30% 30%;
+            position: relative;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 0, 0);
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .bulb.on {
+            background-color: yellow;
+            box-shadow: 0 0 40px 20px rgba(255, 255, 0, 0.8);
+        }
+
+        .bulb::before {
+            content: '';
+            position: absolute;
+            top: 150px;
+            left: 40px;
+            width: 20px;
+            height: 40px;
+            background-color: #666;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="bulb-container">
+        <div class="bulb" id="bulb"></div>
+    </div>
+    <button id="toggleButton">Turn On/Off Bulb</button>
+
+    <script>
+        const bulb = document.getElementById("bulb");
+        const toggleButton = document.getElementById("toggleButton");
+
+        toggleButton.addEventListener("click", () => {
+            bulb.classList.toggle("on");
+        });
+    </script>
+</body>
+</html>
