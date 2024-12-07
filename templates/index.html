@@ -73,7 +73,7 @@
         const bulb = document.getElementById("bulb");
         const toggleButton = document.getElementById("toggleButton");
 
-        // Fetch the current bulb status from the backend
+      
         const fetchBulbStatus = () => {
             fetch('/bulb-status/')
                 .then(response => response.json())
@@ -107,7 +107,7 @@
                 .catch(error => console.error('Error toggling bulb:', error));
         });
 
-        // Get CSRF token
+    
         const getCookie = (name) => {
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -123,7 +123,7 @@
             return cookieValue;
         };
 
-        // Initialize bulb status
+        
         fetchBulbStatus();
     </script>
 </body>
