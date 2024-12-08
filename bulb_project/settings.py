@@ -25,10 +25,10 @@ SECRET_KEY = 'django-insecure-33nze6lrkzgi$j8(#p5u*5a#n0zzp6eu69-7ve&m*9^ip3&!)h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'africom.adamkatani.systems', '157.173.105.219', 'liveodds.kijanicart.com', 'liveodds.games', 'adamkatani.systems', 'fc4c-197-250-226-222.ngrok-free.app'] 
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'africom.adamkatani.systems', '157.173.105.219', 'liveodds.kijanicart.com', 'liveodds.games', 'adamkatani.systems', 'fec1-169-255-185-86.ngrok-free.app'] 
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://fc4c-197-250-226-222.ngrok-free.app', 
+    'https://fec1-169-255-185-86.ngrok-free.app', 
     'http://157.173.105.219',
 ]
 
